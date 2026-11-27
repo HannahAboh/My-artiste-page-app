@@ -1,0 +1,324 @@
+{
+  "slug": "hannah-aboh",
+  "sections": {
+    "videos": true,
+    "listen": true,
+    "release": true,
+    "tour": true,
+    "store": true,
+    "support": true,
+    "mailingList": true,
+    "booking": true
+  },
+  "name": "Hannah Aboh",
+  "descriptor": "Singer · Songwriter",
+  "heroNote": "New single out now",
+  "handle": "@Hannah_Aboh",
+  "images": {
+    "hero": {
+      "img": ""
+    },
+    "portrait": {
+      "img": ""
+    }
+  },
+  "youtube": "https://www.youtube.com/@Hannah_Aboh",
+  "spotifyArtist": "https://open.spotify.com/artist/5YKklNWFgD4II8iXeaXGjf",
+  "artistPage": "https://music.apple.com/us/artist/hannah-aboh/1490827577",
+  "showSongs": 3,
+  "platforms": [
+    "Spotify",
+    "Apple Music",
+    "YouTube Music",
+    "Audiomack",
+    "Boomplay"
+  ],
+  "player": "spotify",
+  "discography": [
+    {
+      "title": "Reach for the Stars",
+      "type": "Single",
+      "year": "2026",
+      "sample": true,
+      "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/1f/32/de/1f32de16-ca23-1426-3bc2-f23080b551f4/0.jpg/600x600bb.jpg",
+      "story": "Placeholder: a few lines on how this song came about, what it means and who it is for.",
+      "lyrics": "Placeholder lyrics, line one\nLine two of the first verse\nLine three\nLine four\n\nChorus line one\nChorus line two",
+      "links": [
+        [
+          "Apple Music",
+          "https://music.apple.com/us/album/reach-for-the-stars-single/6820880517"
+        ],
+        [
+          "YouTube",
+          "https://youtu.be/p3BmVlMOoyU"
+        ]
+      ]
+    },
+    {
+      "title": "Dream",
+      "type": "Single",
+      "year": "2026",
+      "cover": "https://i.scdn.co/image/ab67616d0000b2735a2f76b597c2d59c6e32d833",
+      "links": [
+        [
+          "Spotify",
+          "https://open.spotify.com/track/4ecImVEuf5jm9Joc2cqycN"
+        ],
+        [
+          "Apple Music",
+          "https://music.apple.com/us/album/dream-single/6779246730"
+        ]
+      ]
+    },
+    {
+      "title": "Proud of You",
+      "type": "Single",
+      "year": "2026",
+      "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/61/8d/15/618d15cd-68af-04e8-332f-da37f695b832/0.jpg/600x600bb.jpg",
+      "links": [
+        [
+          "Apple Music",
+          "https://music.apple.com/us/album/proud-of-you-single/6779147661"
+        ]
+      ]
+    },
+    {
+      "title": "Number 1",
+      "type": "Single",
+      "year": "2026",
+      "links": [
+        [
+          "Apple Music",
+          "https://music.apple.com/us/album/number-1-single/1891543676"
+        ]
+      ]
+    },
+    {
+      "title": "The Medley (Cover)",
+      "type": "Single",
+      "year": "2025",
+      "links": [
+        [
+          "Apple Music",
+          "https://music.apple.com/us/album/the-medley-cover-cover-single/1850547643"
+        ]
+      ]
+    },
+    {
+      "title": "Rise",
+      "type": "Single",
+      "year": "2025",
+      "links": [
+        [
+          "Apple Music",
+          "https://music.apple.com/us/album/rise-single/1830799833"
+        ]
+      ]
+    },
+    {
+      "title": "He's Got You",
+      "type": "Single",
+      "year": "2025",
+      "links": [
+        [
+          "Apple Music",
+          "https://music.apple.com/us/album/hes-got-you-single/1799862115"
+        ]
+      ]
+    },
+    {
+      "title": "Who We Are",
+      "type": "Single",
+      "year": "2023",
+      "links": [
+        [
+          "Apple Music",
+          "https://music.apple.com/us/album/who-we-are/1682701550?i=1682701551"
+        ]
+      ]
+    }
+  ],
+  "corners": 16,
+  "doodles": false,
+  "flyingNote": true,
+  "theme": "classic",
+  "hostCode": "aboh-4827",
+  "showVideos": 3,
+  "songs": [
+    {
+      "title": "Reach For The Stars",
+      "meta": "Hannah Aboh · Single · October 30, 2026",
+      "note": "Latest single",
+      "video": {
+        "href": "https://youtu.be/p3BmVlMOoyU",
+        "img": "",
+        "tone": 4
+      },
+      "stream": [
+        [
+          "Apple Music",
+          "https://music.apple.com/us/album/reach-for-the-stars/6820880517?i=6820880518"
+        ],
+        [
+          "YouTube",
+          "https://youtu.be/p3BmVlMOoyU"
+        ]
+      ]
+    },
+    {
+      "title": "",
+      "meta": "Hannah Aboh · Official video",
+      "note": "",
+      "video": {
+        "href": "https://youtu.be/FU7o16_4uII",
+        "img": "",
+        "tone": 5
+      },
+      "stream": []
+    }
+  ],
+  "allDates": "#",
+  "shows": [
+    [
+      "14",
+      "February",
+      "Sun",
+      "Lagos",
+      "Venue name · Lagos",
+      "Few left",
+      "#"
+    ],
+    [
+      "06",
+      "March",
+      "Fri",
+      "Abuja",
+      "Venue name · Abuja",
+      "",
+      "#"
+    ],
+    [
+      "20",
+      "March",
+      "Fri",
+      "Port Harcourt",
+      "Venue name · Port Harcourt",
+      "",
+      "#"
+    ],
+    [
+      "11",
+      "April",
+      "Sat",
+      "London",
+      "Venue name · UK",
+      "Sold out",
+      "#"
+    ]
+  ],
+  "release": {
+    "sample": true,
+    "title": "Next Single",
+    "date": "2026-12-18T00:00:00+01:00",
+    "cover": "",
+    "presave": "#",
+    "presaveApple": "#",
+    "listen": ""
+  },
+  "bandsintown": {
+    "artist": "",
+    "appId": ""
+  },
+  "showsSample": true,
+  "linkInBio": true,
+  "stats": {
+    "goatcounter": ""
+  },
+  "siteUrl": "",
+  "bio": {
+    "headline": "ABOUT ME",
+    "photo": "photos/bio-photo.webp",
+    "cutout": "photos/bio-cut.webp",
+    "short": "Hannah Aboh is a singer and songwriter making music that lifts people up. (Placeholder: replace with your own short bio.)",
+    "text": [],
+    "facts": [],
+    "backdrop": "photos/bio-garden.webp"
+  },
+  "store": "#",
+  "merchSample": true,
+  "merch": [
+    {
+      "name": "Reach for the Stars tee",
+      "price": "₦15,000",
+      "href": "#",
+      "icon": "tee"
+    },
+    {
+      "name": "Signed poster",
+      "price": "₦8,000",
+      "href": "#",
+      "icon": "poster"
+    },
+    {
+      "name": "Limited edition CD",
+      "price": "₦6,000",
+      "href": "#",
+      "icon": "vinyl"
+    }
+  ],
+  "support": {
+    "sample": true,
+    "intro": "Love the music? Help Hannah keep making it.",
+    "currency": "USD",
+    "amounts": [
+      5,
+      10,
+      25,
+      50
+    ],
+    "naira": "#",
+    "nairaLabel": "Paystack",
+    "international": "#",
+    "intlLabel": "PayPal",
+    "bank": {
+      "bank": "Bank name",
+      "name": "Account name",
+      "number": "0123456789"
+    }
+  },
+  "joinApps": {
+    "sample": true,
+    "whatsapp": "#",
+    "telegram": "#"
+  },
+  "mailingList": {
+    "endpoint": ""
+  },
+  "contact": {
+    "sample": true,
+    "email": "bookings@example.com",
+    "cards": [
+      [
+        "Bookings",
+        "bookings@example.com"
+      ],
+      [
+        "Management",
+        "management@example.com"
+      ]
+    ]
+  },
+  "socials": {
+    "youtube": "https://www.youtube.com/@Hannah_Aboh",
+    "spotify": "https://open.spotify.com/artist/5YKklNWFgD4II8iXeaXGjf",
+    "apple": "https://music.apple.com/us/artist/hannah-aboh/1490827577",
+    "instagram": "#",
+    "tiktok": "#"
+  },
+  "share": {
+    "title": "Hannah Aboh · Singer and Songwriter",
+    "image": "photos/share.jpg",
+    "description": "Hannah Aboh is a singer and songwriter making music that lifts people up.",
+    "hideFromSearch": true
+  }
+}

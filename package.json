@@ -1,0 +1,11 @@
+{
+  "name": "my-artiste-page-app",
+  "private": true,
+  "type": "module",
+  "description": "One page design, many artists: builds each artist's website from their settings file.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node scripts/check.mjs"
+  },
+  "engines": { "node": ">=20" }
+}
