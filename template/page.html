@@ -276,7 +276,6 @@ body.menu-open{overflow:hidden}
 .big{font:400 min(25.5vw,158px)/.84 "Anton","Bebas Neue","Impact","Arial Narrow",sans-serif}
 .sig{font:400 min(14vw,87px)/1 "Monsieur La Doulaise","Snell Roundhand","Brush Script MT",cursive}
 .bio-short{font:italic 400 clamp(13.5px,3.3vw,19px)/1.5 var(--f-serif)}
-.poster-foot{font:500 clamp(10px,2.4vw,14px)/1 var(--f-sans)}
 .lower{gap:2.5vw}
 .stars{gap:clamp(12px,4vw,28px)}
 .stars svg{width:clamp(9px,2.2vw,14px)}
@@ -287,9 +286,6 @@ body.menu-open{overflow:hidden}
 .lower{position:absolute;z-index:4;left:6%;right:6%;top:64%;display:grid;justify-items:center;text-align:center;gap:2.5cqw}
 .sig{margin:0;font:400 14cqw/1 "Monsieur La Doulaise","Snell Roundhand","Brush Script MT",cursive;color:#fff;white-space:nowrap;text-shadow:0 2px 18px rgba(0,0,0,.4)}
 .bio-short{margin:0;max-width:40ch;font:italic 400 clamp(13.5px,3.3cqw,19px)/1.5 var(--f-serif);color:#f3eee4;text-shadow:0 1px 10px rgba(0,0,0,.5)}
-.poster-foot{position:absolute;z-index:4;left:5%;right:5%;bottom:3.2%;display:flex;justify-content:flex-end;align-items:center;gap:10px;font:500 clamp(10px,2.4cqw,14px)/1 var(--f-sans);letter-spacing:.1em;text-transform:uppercase;color:#f3eee4}
-.poster-foot span:first-child{text-align:left}
-.poster-foot span:last-child{text-align:right}
 .stars{display:flex;gap:clamp(12px,4cqw,28px)}
 .stars svg{width:clamp(9px,2.2cqw,14px);fill:#f3eee4}
 .under{padding:28px max(20px,env(safe-area-inset-right,0px)) 0 max(20px,env(safe-area-inset-left,0px));display:grid;justify-items:center;gap:20px}
@@ -373,7 +369,6 @@ footer{padding-block:100px 48px;display:grid;justify-items:center;gap:22px;text-
   .sig{font-size:6.6cqw}
   .bio-short{font-size:clamp(16px,1.4cqw,22px);max-width:32ch}
   .poster-tag{left:5%;top:5%}
-  .poster-foot{left:5%;right:5%;bottom:6%}
   .frame .shade{background:radial-gradient(ellipse 62% 70% at 0% 100%,rgba(14,18,10,.82) 0%,rgba(14,18,10,.5) 45%,rgba(14,18,10,0) 100%),linear-gradient(180deg,rgba(14,18,10,.28) 0%,rgba(14,18,10,0) 14%,rgba(14,18,10,0) 66%,rgba(14,18,10,.6) 100%)}
 }
 
@@ -762,14 +757,12 @@ html.themed .note-fly .ring{border-color:var(--t-icon)}
         <p class="sig" data-t="name"></p>
         <p class="bio-short" data-t="bio.short"></p>
       </div>
-      <div class="poster-foot"><span data-t="handle"></span></div>
     </div>
     <div class="side">
       <div class="side-text">
         <p class="side-sig" data-t="name"></p>
         <span class="side-desc" data-t="descriptor"></span>
         <p class="side-bio" data-t="bio.short"></p>
-        <div class="side-foot"><span data-t="handle"></span></div>
       </div>
     <div class="under">
       <details class="more">
