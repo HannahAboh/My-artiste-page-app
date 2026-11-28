@@ -280,6 +280,12 @@
     "nairaLabel": "Paystack",
     "international": "#",
     "intlLabel": "PayPal",
+    "links": {
+      "stripe": "",
+      "paypal": "",
+      "cashapp": "",
+      "kofi": ""
+    },
     "bank": {
       "bank": "Bank name",
       "name": "Account name",
