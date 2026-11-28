@@ -218,11 +218,11 @@
   ],
   "release": {
     "sample": true,
+    "type": "Single",
     "title": "Next Single",
     "date": "2026-12-18T00:00:00+01:00",
     "cover": "",
     "presave": "#",
-    "presaveApple": "#",
     "listen": ""
   },
   "bandsintown": {
@@ -309,11 +309,15 @@
     ]
   },
   "socials": {
-    "youtube": "https://www.youtube.com/@Hannah_Aboh",
-    "spotify": "https://open.spotify.com/artist/5YKklNWFgD4II8iXeaXGjf",
-    "apple": "https://music.apple.com/us/artist/hannah-aboh/1490827577",
     "instagram": "#",
-    "tiktok": "#"
+    "tiktok": "#",
+    "threads": "",
+    "youtube": "https://www.youtube.com/@Hannah_Aboh",
+    "facebook": "",
+    "x": "",
+    "linkedin": "",
+    "spotify": "https://open.spotify.com/artist/5YKklNWFgD4II8iXeaXGjf",
+    "apple": "https://music.apple.com/us/artist/hannah-aboh/1490827577"
   },
   "share": {
     "title": "Hannah Aboh · Singer and Songwriter",

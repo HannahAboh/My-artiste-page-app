@@ -538,7 +538,7 @@ html.no-doodles body::before,html.linkmode body::before{display:none}
 .sample{display:inline-flex;align-items:center;gap:6px;font:600 9px/1 var(--f-sans);letter-spacing:.18em;text-transform:uppercase;color:#7a4d00;background:#fff1cc;border:1px dashed #d9a400;border-radius:99px;padding:5px 9px;white-space:nowrap}
 .sample::before{content:"";width:6px;height:6px;border-radius:50%;background:#d9a400}
 
-/* ---------- New single: countdown + pre-save ---------- */
+/* ---------- New release: countdown + pre-save ---------- */
 .nr{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:56px;align-items:center;max-width:920px;margin:0 auto}
 .nr .cover{max-width:420px;width:100%;justify-self:end;background-size:cover;background-position:50% 30%;border-radius:var(--r-lg);overflow:hidden}
 .nr .cover::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,12,10,0) 45%,rgba(14,12,10,.7) 100%);z-index:1}
@@ -737,7 +737,7 @@ html.themed .note-fly .ring{border-color:var(--t-icon)}
   <div class="sn-head"><span class="sn-name" data-t="name"></span><button class="sn-close" id="snClose" type="button" aria-label="Close menu">&times;</button></div>
   <nav class="sn-links">
     <a href="#bio"><span>Bio</span></a>
-    <a href="#release"><span>New single</span><small>Pre-save</small></a>
+    <a href="#release"><span id="nrMenu">New release</span><small id="nrMenuSmall">Pre-save</small></a>
     <a href="#music"><span>Videos</span><small>YouTube</small></a>
     <a href="#song-1" class="sub"><span>Latest video</span></a>
     <a href="#discography"><span>Listen</span><small>Spotify</small></a>
@@ -788,7 +788,7 @@ html.themed .note-fly .ring{border-color:var(--t-icon)}
       <div class="cover img" id="nrCover"><div class="ct"><small id="nrKicker">New single</small><b id="nrCoverTitle"></b></div></div>
       <div class="nr-text">
         <span class="label" id="nrWhen"></span>
-        <h2 class="title">New single</h2>
+        <h2 class="title" id="nrHead">New release</h2>
         <p class="nr-song" id="nrSong"></p>
         <div class="cd" id="nrCount" aria-label="Time until release"><div><b data-u="d">00</b><small>Days</small></div><div><b data-u="h">00</b><small>Hours</small></div><div><b data-u="m">00</b><small>Mins</small></div><div><b data-u="s">00</b><small>Secs</small></div></div>
         <div class="btns" id="nrBtns"></div>
@@ -1250,6 +1250,9 @@ $('#merch').innerHTML = SITE.merch.map(p => `<a class="product" href="${esc(p.hr
 
 
 const SOC = {
+  threads:['Threads','<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M11.3 7.4c-.3-2-1.6-3-3.4-3-2.2 0-3.5 1.6-3.5 3.7 0 2.2 1.4 3.9 3.8 3.9 1.6 0 2.9-.8 3.1-2.2.2-1.6-1-2.6-3-2.6-1.4 0-2.2.7-2.2 1.6 0 .9.8 1.4 1.7 1.4 1.5 0 2.4-1.2 2.4-3.2"/><path d="M13.6 5.2C12.8 2.9 10.7 1.5 8 1.5 4.3 1.5 1.9 4.1 1.9 8s2.4 6.5 6.1 6.5c2.6 0 4.5-1.1 5.3-3.1"/></svg>'],
+  linkedin:['LinkedIn','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M3.6 5.6H1.4V14h2.2zM2.5 1.9a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6zM14.6 9.2c0-2.3-1.2-3.8-3.2-3.8-1.1 0-1.9.6-2.2 1.2V5.6H7.1V14h2.2V9.6c0-1.1.5-2 1.5-2s1.6.8 1.6 2V14h2.2z"/></svg>'],
+  facebook:['Facebook','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M9.2 15V8.9h2l.3-2.4H9.2V5c0-.7.2-1.2 1.2-1.2h1.3V1.7c-.2 0-1-.1-1.9-.1-1.9 0-3.2 1.2-3.2 3.3v1.6H4.5v2.4h2.1V15z"/></svg>'],
   instagram:['Instagram','<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="2" y="2" width="12" height="12" rx="3.5"/><circle cx="8" cy="8" r="2.8"/><circle cx="11.7" cy="4.3" r=".5" fill="currentColor"/></svg>'],
   tiktok:['TikTok','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M10.6 1.5h-2.2v8.7a1.9 1.9 0 1 1-1.9-1.9c.2 0 .4 0 .6.1V6.1a4.1 4.1 0 1 0 3.5 4.1V5.8a5 5 0 0 0 2.9.9V4.5a2.9 2.9 0 0 1-2.9-3Z"/></svg>'],
   youtube:['YouTube','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M15.3 4.3a2 2 0 0 0-1.4-1.4C12.7 2.6 8 2.6 8 2.6s-4.7 0-5.9.3A2 2 0 0 0 .7 4.3 21 21 0 0 0 .4 8a21 21 0 0 0 .3 3.7 2 2 0 0 0 1.4 1.4c1.2.3 5.9.3 5.9.3s4.7 0 5.9-.3a2 2 0 0 0 1.4-1.4 21 21 0 0 0 .3-3.7 21 21 0 0 0-.3-3.7ZM6.5 10.3V5.7L10.4 8Z"/></svg>'],
@@ -1257,7 +1260,9 @@ const SOC = {
   apple:['Apple Music','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M12.5 1.6 6 2.9a.6.6 0 0 0-.5.6v7a2 2 0 1 0 1.2 1.8V6.2l5.1-1v4.1a2 2 0 1 0 1.2 1.8V2.2a.6.6 0 0 0-.5-.6Z"/></svg>'],
   x:['X','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M12.2 1.5h2.2L9.6 7l5.6 7.5h-4.4L7.4 10l-4 4.5H1.2l5.1-5.8L.9 1.5h4.5l3.1 4.1Zm-.8 11.7h1.2L4.7 2.7H3.4Z"/></svg>'],
 };
-$('#socials').innerHTML = Object.entries(SITE.socials).map(([k,u]) => SOC[k] ? `<a href="${esc(u)}"${out(u)} aria-label="${SOC[k][0]}" title="${SOC[k][0]}">${SOC[k][1]}</a>` : "").join("");
+// one icon per filled-in link, always in this order; empty ones are left out
+const SOC_ORDER = ['instagram','tiktok','threads','youtube','facebook','x','linkedin','spotify','apple'];
+$('#socials').innerHTML = SOC_ORDER.map(k => [k, SITE.socials?.[k]]).map(([k,u]) => SOC[k] && u ? `<a href="${esc(u)}"${out(u)} aria-label="${SOC[k][0]}" title="${SOC[k][0]}">${SOC[k][1]}</a>` : "").join("");
 $('#yr').textContent = new Date().getFullYear();
 
 // Paint every generated image slot
@@ -1343,10 +1348,16 @@ $('#cleanBtn').addEventListener('click', () => { const c = document.body.classLi
   .forEach(([q, on]) => { const el = document.querySelector(q); if (el) el.outerHTML = sampleTag(on); });
 [["#shows", SITE.showsSample], ["#store", SITE.merchSample]].forEach(([q, on]) => { const h = document.querySelector(q + " .sec-head"); if (h && on) h.insertAdjacentHTML("beforeend", sampleTag(true)); });
 
-// New single: countdown, then "Out now"
+// New release (single, EP, album or podcast): countdown, then "Out now"
 (() => {
   const R = SITE.release, sec = document.getElementById("release"); if (!R || !sec) return;
   const when = new Date(R.date), first = SITE.name.split(" ")[0];
+  // release.type sets the heading and the button: "New EP", "Pre-save the EP"
+  const TYPES = { "single":["single", "Pre-save the single"], "ep":["EP", "Pre-save the EP"], "album":["album", "Pre-save the album"],
+    "podcast":["episode", "Follow the podcast"] };
+  const [noun, cta] = TYPES[String(R.type || "single").toLowerCase()] || TYPES.single, podcast = noun === "episode";
+  $('#nrHead').textContent = `New ${noun}`;
+  const mi = document.getElementById("nrMenu"); if (mi){ mi.textContent = `New ${noun}`; document.getElementById("nrMenuSmall").textContent = podcast ? "Follow" : "Pre-save"; }
   paint($('#nrCover'), R.cover || BIO_IMG.photo, 0);
   $('#nrCoverTitle').textContent = R.title; $('#nrKicker').textContent = SITE.name; $('#nrSong').textContent = `“${R.title}”`;
   const fmt = when.toLocaleDateString("en-GB", { weekday:"long", day:"numeric", month:"long", timeZone:"Africa/Lagos" });
@@ -1363,7 +1374,7 @@ $('#cleanBtn').addEventListener('click', () => { const c = document.body.classLi
     cells.forEach(c => { const u = units[c.dataset.u]; const v = Math.floor(left / u); left -= v * u; c.textContent = String(v).padStart(2, "0"); });
   }
   $('#nrWhen').textContent = `Out ${fmt}`;
-  $('#nrBtns').innerHTML = btn("dark", R.presave, "Pre-save on Spotify") + btn("line", R.presaveApple, "Pre-add on Apple Music") + `<a class="btn line" href="#join">Remind me</a>`;
+  $('#nrBtns').innerHTML = btn("dark", R.presave, cta) + `<a class="btn line" href="#join">Remind me</a>`;
   tick(); timer = setInterval(tick, 1000);
 })();
 
