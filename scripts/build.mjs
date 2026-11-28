@@ -51,7 +51,7 @@ function headFor(site) {
   const abs = p => (!p ? "" : /^https?:/.test(p) ? p : base ? `${base}/${p.replace(/^\//, "")}` : `/${p.replace(/^\//, "")}`);
   const image = abs(share.image);
   const bg = typeof site.theme === "string" ? PRESETS[site.theme] : site.theme?.background || PRESETS.classic;
-  const sameAs = [site.youtube, site.spotifyArtist, site.artistPage, site.socials?.instagram, site.socials?.tiktok]
+  const sameAs = [site.youtube, site.spotifyArtist, site.artistPage, ...["instagram", "tiktok", "threads", "facebook", "x", "linkedin"].map(k => site.socials?.[k])]
     .filter(u => u && /^https?:/.test(u));
   const ld = { "@context": "https://schema.org", "@type": "MusicGroup", name: site.name, description: desc, ...(image && { image }), ...(sameAs.length && { sameAs: [...new Set(sameAs)] }) };
   return [

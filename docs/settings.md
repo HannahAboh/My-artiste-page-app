@@ -69,7 +69,7 @@ Each artist has one `settings.json` in `artists/<slug>/`. This page explains eve
 | `mailingList.endpoint` | Where sign-ups go. Empty uses Netlify Forms. Later it will point at the dashboard. Every sign-up is tagged with the artist's name. |
 | `joinApps` | WhatsApp channel and Telegram links beside the sign-up box. Empty hides a button. |
 | `contact` | Booking email and contact cards. |
-| `socials` | Links for the icons at the bottom: `youtube`, `spotify`, `apple`, `instagram`, `tiktok`. |
+| `socials` | Links for the icons at the bottom: `instagram`, `tiktok`, `threads`, `youtube`, `facebook`, `x`, `linkedin`, `spotify`, `apple`. Leave a link empty (`""`) to hide its icon. |
 | `linkInBio` | Turns on the short link-in-bio page at `/links`. |
 | `stats.goatcounter` | A free GoatCounter account name for visit counts. |
 
