@@ -1381,20 +1381,39 @@ $('#cleanBtn').addEventListener('click', () => { const c = document.body.classLi
     }).catch(() => {});
 })();
 
-// Support: amounts in dollars or naira (SITE.support.currency), payment buttons, bank transfer
+// Support: amounts in the artist's currency (SITE.support.currency), payment buttons, bank transfer.
+// Artists in Paystack countries use the naira (Paystack) link; artists elsewhere add their own links (SITE.support.links).
 (() => {
   const S = SITE.support; if (!S || !document.getElementById("support")) return;
-  const usd = String(S.currency || "NGN").toUpperCase() === "USD";
-  const money = n => usd ? "$" + Number(n).toLocaleString("en-US") : "₦" + Number(n).toLocaleString("en-NG");
+  const cur = String(S.currency || "NGN").toUpperCase(), usd = cur === "USD";
+  const SYM = { NGN:"₦", USD:"$", GBP:"£", EUR:"€", GHS:"GH₵", KES:"KSh ", ZAR:"R", XOF:"CFA " };
+  const money = n => (SYM[cur] ?? cur + " ") + Number(n).toLocaleString("en-US");
+  const L = S.links || {};
+  const PAY = [["stripe", "by card"], ["paypal", "with PayPal"], ["cashapp", "with Cash App"], ["kofi", "on Ko-fi"]].filter(([k]) => L[k]);
+  // PayPal.me and Cash App links can carry the amount, so the fan doesn't have to type it
+  const withAmt = (k, u) => {
+    if (!amt) return u;
+    if (k === "paypal" && cur !== "NGN" && /paypal\.me\/[^/?#]+\/?$/i.test(u)) return u.replace(/\/?$/, "/" + amt + cur);
+    if (k === "cashapp" && (usd || cur === "GBP") && /cash\.app\/\$[^/?#]+\/?$/i.test(u)) return u.replace(/\/?$/, "/" + amt);
+    return u;
+  };
   $('#supIntro').textContent = S.intro || "";
   let amt = S.amounts?.[1] ?? S.amounts?.[0];
   const draw = () => {
     $('#supAmts').innerHTML = (S.amounts || []).map(a => `<button type="button" data-a="${a}" aria-pressed="${a === amt}">${money(a)}</button>`).join("");
-    $('#supBtns').innerHTML = usd
+    let html = usd
       ? (S.international ? `<a class="btn dark" href="${esc(S.international)}"${out(S.international)}>Support with ${amt ? money(amt) : esc(S.intlLabel || "PayPal")}</a>` : "")
         + (S.naira ? `<a class="btn line" href="${esc(S.naira)}"${out(S.naira)}>In Nigeria? Pay in naira</a>` : "")
       : (S.naira ? `<a class="btn dark" href="${esc(S.naira)}"${out(S.naira)}>Support with ${amt ? money(amt) : "naira"}</a>` : "")
         + (S.international ? `<a class="btn line" href="${esc(S.international)}"${out(S.international)}>Outside Nigeria? ${esc(S.intlLabel || "Pay online")}</a>` : "");
+    const before = html;
+    PAY.forEach(([k, how], i) => {
+      const u = withAmt(k, L[k]);
+      html += !before && i === 0
+        ? `<a class="btn dark" href="${esc(u)}"${out(u)}>Pay ${amt ? money(amt) + " " : ""}${how}</a>`
+        : `<a class="btn line" href="${esc(u)}"${out(u)}>${before && S.naira ? "From abroad? Pay " : "Pay "}${how}</a>`;
+    });
+    $('#supBtns').innerHTML = html;
   };
   draw();
   $('#supAmts').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; amt = +b.dataset.a; draw(); });

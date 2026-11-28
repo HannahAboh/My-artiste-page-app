@@ -60,7 +60,7 @@ Each artist has one `settings.json` in `artists/<slug>/`. This page explains eve
 | `shows` | Tour dates as `[day, month, weekday, city, venue, status, ticket link]`. Status is empty, `Few left` or `Sold out`. |
 | `bandsintown` | Set `artist` and `appId` to load tour dates from Bandsintown instead. |
 | `store`, `merch` | Store link, and products with `name`, `price`, `href` and `icon` (`vinyl`, `tee` or `poster`). |
-| `support` | Tips: `currency` (`USD` or `NGN`), `amounts`, the `naira` payment link (Paystack) and `international` link (PayPal), and optional `bank` details. |
+| `support` | Tips: `currency` (`NGN`, `GHS`, `KES`, `ZAR`, `XOF`, `USD`, `GBP` or `EUR`), `amounts`, the `naira` payment link (Paystack, for artists in Nigeria, Ghana, Kenya, South Africa and Côte d'Ivoire), the older `international` link, optional `links` for artists anywhere (`stripe` payment link, `paypal` PayPal.me, `cashapp`, `kofi`; each filled one becomes a button, and PayPal.me and Cash App links get the chosen amount added), and optional `bank` details. |
 
 ## Fans and contact
 
