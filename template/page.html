@@ -1343,13 +1343,13 @@ $('#cleanBtn').addEventListener('click', () => { const c = document.body.classLi
   .forEach(([q, on]) => { const el = document.querySelector(q); if (el) el.outerHTML = sampleTag(on); });
 [["#shows", SITE.showsSample], ["#store", SITE.merchSample]].forEach(([q, on]) => { const h = document.querySelector(q + " .sec-head"); if (h && on) h.insertAdjacentHTML("beforeend", sampleTag(true)); });
 
-// New release (single, EP, album, mixtape or podcast episode): countdown, then "Out now"
+// New release (single, EP, album or podcast): countdown, then "Out now"
 (() => {
   const R = SITE.release, sec = document.getElementById("release"); if (!R || !sec) return;
   const when = new Date(R.date), first = SITE.name.split(" ")[0];
   // release.type sets the heading and the button: "New EP", "Pre-save the EP"
   const TYPES = { "single":["single", "Pre-save the single"], "ep":["EP", "Pre-save the EP"], "album":["album", "Pre-save the album"],
-    "mixtape":["mixtape", "Pre-save the mixtape"], "podcast episode":["episode", "Follow the podcast"], "other":["release", "Pre-save"] };
+    "podcast":["episode", "Follow the podcast"] };
   const [noun, cta] = TYPES[String(R.type || "single").toLowerCase()] || TYPES.single, podcast = noun === "episode";
   $('#nrHead').textContent = `New ${noun}`;
   const mi = document.getElementById("nrMenu"); if (mi){ mi.textContent = `New ${noun}`; document.getElementById("nrMenuSmall").textContent = podcast ? "Follow" : "Pre-save"; }
