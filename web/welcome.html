@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Payment received · My Artiste Page</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#f2ece2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%2712%27 fill=%27%231e1814%27/%3E%3Cpath fill=%27%23f2ece2%27 d=%27M10 6v7.1A2.6 2.6 0 1 0 11.4 15.4V9l5-1.2v3.9a2.6 2.6 0 1 0 1.4 2.3V4.6Z%27/%3E%3C/svg%3E">
+
+</head>
+<body>
+<div class="shapes" aria-hidden="true"><i></i><i></i><i></i></div>
+<header class="top"><div class="wrap"><a class="brand" href="/"><b><svg viewBox="0 0 24 24"><path d="M10 6v7.1A2.6 2.6 0 1 0 11.4 15.4V9l5-1.2v3.9a2.6 2.6 0 1 0 1.4 2.3V4.6Z"/></svg></b>My Artiste Page</a><nav><a class="btn line small" href="/login">Sign in</a></nav></div></header>
+<main class="solo">
+<div class="card glass reveal" style="text-align:center">
+  <div class="label" id="kicker">Step 2 of 3</div>
+  <h1 class="title" id="t">Checking<br>payment</h1>
+  <p id="p">This only takes a moment.</p>
+  <div id="more" hidden></div>
+</div>
+</main>
+<script type="module">
+import { $, api, reveals } from "/assets/app.js";
+reveals();
+const ref = new URLSearchParams(location.search).get("reference") || new URLSearchParams(location.search).get("trxref");
+const set = (t, p, more) => { $("#t").innerHTML = t; $("#p").innerHTML = p; if (more) { $("#more").innerHTML = more; $("#more").hidden = false; } };
+let tries = 0;
+async function check() {
+  if (!ref) return set("Nothing<br>to check", "We couldn't find a payment here.", '<a class="btn" href="/#pricing">See plans</a>');
+  try {
+    const r = await api(`/api/confirm?reference=${encodeURIComponent(ref)}`);
+    if (r.status === "paid") return set("Check your<br>email", `Payment received, thank you. We've sent a link to <b>${r.email.replace(/[<>&]/g, "")}</b> to set your password.`, '<p class="muted" style="font-size:14px">Not there after a few minutes? Look in spam, or <a href="/login?forgot=1">send it again</a>.</p>');
+    if (r.status === "failed") return set("Payment<br>didn't go through", "Your card wasn't charged. Please try again, or use another card.", '<a class="btn" href="/join">Try again</a>');
+  } catch {}
+  if (++tries < 10) return setTimeout(check, 2500);
+  set("Almost<br>there", "Your payment is still being confirmed. As soon as it is, we'll email you a link to set your password. You can close this page.");
+}
+check();
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your account · My Artiste Page</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#f2ece2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%2712%27 fill=%27%231e1814%27/%3E%3Cpath fill=%27%23f2ece2%27 d=%27M10 6v7.1A2.6 2.6 0 1 0 11.4 15.4V9l5-1.2v3.9a2.6 2.6 0 1 0 1.4 2.3V4.6Z%27/%3E%3C/svg%3E">
+<style>.rows{display:grid;margin-top:8px;border-top:1px solid var(--line)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.row b{font-weight:600;text-align:right;overflow-wrap:anywhere}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;vertical-align:middle}
+.dot.ok{background:var(--ok)}.dot.warn{background:var(--warn)}</style>
+</head>
+<body>
+<div class="shapes" aria-hidden="true"><i></i><i></i><i></i></div>
+<header class="top"><div class="wrap"><a class="brand" href="/"><b><svg viewBox="0 0 24 24"><path d="M10 6v7.1A2.6 2.6 0 1 0 11.4 15.4V9l5-1.2v3.9a2.6 2.6 0 1 0 1.4 2.3V4.6Z"/></svg></b>My Artiste Page</a><nav><a class="btn line small" href="/">Home</a></nav></div></header>
+<main class="solo">
+<div class="card glass reveal" id="card" style="width:min(520px,100% - 32px)">
+  <div class="label" id="kicker">Your account</div>
+  <h1 class="title" id="t">Loading</h1>
+  <p id="p"></p>
+  <div class="rows" id="rows"></div>
+  <div class="form" id="actions" style="margin-top:22px"></div>
+  <div class="msg" id="msg" role="alert" hidden style="margin-top:14px"></div>
+</div>
+</main>
+<script type="module">
+import { $, api, busy, showMsg, niceDate, signOut, config, reveals } from "/assets/app.js";
+reveals();
+const me = await api("/api/me", { signedIn: true });
+const c = await config();
+const welcome = new URLSearchParams(location.search).get("welcome");
+const plan = me.plan === "yearly" ? "Yearly" : "Monthly";
+const status = { active: ["Live", "ok"], past_due: ["Payment needed", "warn"], locked: ["Paused", "warn"] }[me.status];
+const row = (k, v) => `<div class="row"><span class="label">${k}</span><b>${v}</b></div>`;
+const esc = s => String(s ?? "").replace(/[&<>"']/g, ch => "&#" + ch.charCodeAt(0) + ";");
+$("#rows").innerHTML = [
+  row("Page", `<span class="dot ${status[1]}"></span>${status[0]}`),
+  row("Plan", plan),
+  row(me.endsAtPeriodEnd ? "Ends on" : me.status === "active" ? "Renews on" : "Paid until", niceDate(me.paidUntil) || "-"),
+  row("Email", esc(me.email)),
+].join("");
+const A = $("#actions");
+if (me.locked) {
+  $("#kicker").textContent = "Your page is paused";
+  $("#t").innerHTML = "Coming<br>back soon";
+  $("#p").textContent = "Fans see a \"coming back soon\" page for now. Nothing is deleted: pay and everything comes straight back.";
+  A.innerHTML = `<a class="btn wide" href="${me.payUrl}">Pay and bring it back</a>`;
+} else {
+  $("#t").innerHTML = welcome ? "You're<br>all set" : esc(me.artistName || "Your account");
+  $("#p").textContent = welcome ? "Your details are saved and your page is being built. You'll get an email the moment it's live."
+    : me.status === "past_due" ? `Your last payment didn't go through. Your page stays live until ${niceDate(me.graceUntil)}. Pay now to keep it up.` : "";
+  A.innerHTML = (me.status === "past_due" ? `<a class="btn wide" href="${me.payUrl}">Pay now</a>` : "")
+    + (c.dashboardUrl && me.onboarded ? `<a class="btn wide" href="${c.dashboardUrl}">Open your dashboard</a>` : "")
+    + (!me.onboarded ? `<a class="btn wide" href="/start">Paste your Spotify link</a>` : "")
+    + `<button class="btn line wide" id="card-btn">Change card or cancel</button>`;
+}
+A.insertAdjacentHTML("beforeend", `<button class="btn line wide" id="out" style="border-color:transparent">Sign out</button>`);
+$("#out").onclick = () => { signOut(); location.href = "/"; };
+const cb = $("#card-btn");
+if (cb) cb.onclick = async () => {
+  busy(cb, true);
+  try { location.href = (await api("/api/billing/card", { method: "POST", signedIn: true })).url; }
+  catch (err) { busy(cb, false); showMsg($("#msg"), err.message); }
+};
+</script>
+</body>
+</html>

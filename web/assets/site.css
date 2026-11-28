@@ -1,0 +1,84 @@
+/* Shared look for the sales and account pages: matches the artist page.
+   Off-white paper, soft organic shapes, frosted-glass cards, heavy uppercase headings,
+   tiny letter-spaced labels and black pill buttons. */
+:root{
+  --paper:#f2ece2;--ink:#1e1814;--soft:#7a6c5f;--line:rgba(30,24,20,.12);
+  --glass:rgba(255,252,247,.55);--glass-edge:rgba(255,255,255,.7);
+  --brass:#b89466;--ok:#2f6b4a;--warn:#a2542f;
+  --r:16px;--f:"Figtree","Helvetica Neue",Arial,system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font:400 16px/1.55 var(--f);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+[hidden]{display:none!important}
+
+/* soft shapes behind everything */
+.shapes{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.shapes i{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55}
+.shapes i:nth-child(1){width:46vmax;height:38vmax;left:-14vmax;top:-10vmax;background:#e7d6bd}
+.shapes i:nth-child(2){width:36vmax;height:40vmax;right:-12vmax;top:22vh;background:#d9c7ad;border-radius:42% 58% 63% 37%/45% 41% 59% 55%}
+.shapes i:nth-child(3){width:30vmax;height:26vmax;left:18vw;bottom:-12vmax;background:#efe1cc}
+
+.wrap{width:min(1080px,100% - 32px);margin-inline:auto}
+.label{font:600 10.5px/1 var(--f);letter-spacing:.22em;text-transform:uppercase;color:var(--soft)}
+.title{font:800 clamp(38px,8.2vw,92px)/.92 var(--f);letter-spacing:-.035em;text-transform:uppercase;margin:0}
+.h2{font:800 clamp(30px,5.4vw,56px)/.95 var(--f);letter-spacing:-.035em;text-transform:uppercase;margin:0}
+.h3{font:800 20px/1.1 var(--f);letter-spacing:-.02em;text-transform:uppercase;margin:0}
+.lead{font-size:clamp(16px,2.1vw,19px);color:#3a2f27;max-width:34em}
+.muted{color:var(--soft)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 26px;border-radius:99px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font:700 11px/1 var(--f);letter-spacing:.2em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:transform .2s,background .2s,color .2s,opacity .2s;white-space:nowrap}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.line{background:transparent;color:var(--ink)}
+.btn.small{height:38px;padding:0 18px;font-size:10px}
+.btn.wide{width:100%}
+.btn[disabled],.btn.busy{opacity:.55;pointer-events:none}
+.btn.busy::after{content:"";width:12px;height:12px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.glass{background:var(--glass);border:1px solid var(--glass-edge);border-radius:calc(var(--r)*1.4);-webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);box-shadow:0 20px 60px -30px rgba(60,40,20,.35)}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:30;padding:14px 0;padding-top:max(14px,env(safe-area-inset-top))}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;white-space:nowrap;align-items:center;gap:10px;font:800 13px/1 var(--f);letter-spacing:.16em;text-transform:uppercase;text-decoration:none}
+.brand b{width:28px;height:28px;border-radius:50%;background:var(--ink);display:grid;place-items:center}
+.brand b svg{width:14px;height:14px;fill:var(--paper)}
+.top nav{display:flex;align-items:center;gap:8px}
+.top .pill{background:rgba(255,252,247,.6);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid var(--glass-edge);border-radius:99px;padding:6px}
+
+/* forms */
+.form{display:grid;gap:14px}
+.field{display:grid;gap:7px}
+.field span{font:600 10px/1 var(--f);letter-spacing:.2em;text-transform:uppercase;color:var(--soft)}
+.field input{height:52px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.7);padding:0 16px;font:500 16px var(--f);color:var(--ink);outline:none;transition:border-color .2s,box-shadow .2s;width:100%}
+.field input:focus{border-color:var(--ink);box-shadow:0 0 0 3px rgba(30,24,20,.08)}
+.field small{color:var(--soft);font-size:13px}
+.msg{font-size:14px;border-radius:12px;padding:12px 14px;background:rgba(162,84,47,.1);color:var(--warn)}
+.msg.ok{background:rgba(47,107,74,.1);color:var(--ok)}
+
+/* plan switch */
+.switch{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;border-radius:99px;background:rgba(30,24,20,.06)}
+.switch label{position:relative;cursor:pointer}
+.switch input{position:absolute;opacity:0;pointer-events:none}
+.switch span{display:flex;flex-direction:column;align-items:center;gap:3px;padding:11px 8px;border-radius:99px;font:700 10.5px/1 var(--f);letter-spacing:.18em;text-transform:uppercase;color:var(--soft);transition:background .2s,color .2s}
+.switch em{font-style:normal;font:600 12px/1 var(--f);letter-spacing:0;text-transform:none}
+.switch input:checked+span{background:var(--ink);color:var(--paper)}
+.switch input:focus-visible+span{outline:2px solid var(--ink);outline-offset:2px}
+
+/* centred single-card pages (join, welcome, login...) */
+.solo{min-height:calc(100vh - 80px);display:grid;place-items:center;padding:24px 0 60px}
+.card{width:min(460px,100% - 32px);padding:34px 26px}
+.card .title{font-size:clamp(34px,9vw,46px);margin:12px 0 14px}
+.card p{margin:0 0 18px;color:#3a2f27}
+.card .alt{margin-top:18px;text-align:center;font-size:14px;color:var(--soft)}
+.card .alt a{font-weight:600}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+@media (max-width:420px){.brand{font-size:11px;letter-spacing:.1em;gap:8px}.brand b{width:24px;height:24px}.top .pill{padding:4px}.top nav .btn.small{padding:0 11px;letter-spacing:.13em;height:34px}}

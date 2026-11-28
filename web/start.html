@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Build your page · My Artiste Page</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#f2ece2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%2712%27 fill=%27%231e1814%27/%3E%3Cpath fill=%27%23f2ece2%27 d=%27M10 6v7.1A2.6 2.6 0 1 0 11.4 15.4V9l5-1.2v3.9a2.6 2.6 0 1 0 1.4 2.3V4.6Z%27/%3E%3C/svg%3E">
+
+</head>
+<body>
+<div class="shapes" aria-hidden="true"><i></i><i></i><i></i></div>
+<header class="top"><div class="wrap"><a class="brand" href="/"><b><svg viewBox="0 0 24 24"><path d="M10 6v7.1A2.6 2.6 0 1 0 11.4 15.4V9l5-1.2v3.9a2.6 2.6 0 1 0 1.4 2.3V4.6Z"/></svg></b>My Artiste Page</a><nav><a class="btn line small" href="/login">Sign in</a></nav></div></header>
+<main class="solo">
+<form class="card glass reveal" id="f" novalidate>
+  <div class="label">Let's build your page</div>
+  <h1 class="title">Paste your<br>Spotify link</h1>
+  <p>We'll use it to fill in your name, photo and music. Podcasters, paste your show link.</p>
+  <div class="form">
+    <label class="field"><span>Spotify artist or podcast link</span><input name="spotify" inputmode="url" autocomplete="off" placeholder="open.spotify.com/artist/..."><small>In Spotify, open your profile, tap the three dots, then Share and Copy link.</small></label>
+    <label class="field"><span>Artist or podcast name</span><input name="artistName" maxlength="80"></label>
+    <div class="msg" id="msg" role="alert" hidden></div>
+    <button class="btn wide" id="go">Build my page</button>
+  </div>
+  <p class="alt"><a href="#" id="skip">I'm not on Spotify yet</a></p>
+</form>
+</main>
+<script type="module">
+import { $, api, busy, showMsg, config, reveals } from "/assets/app.js";
+reveals();
+const f = $("#f"), msg = $("#msg");
+const me = await api("/api/me", { signedIn: true });
+if (me.locked) location.href = "/account";
+if (me.artistName) f.artistName.value = me.artistName;
+if (me.spotifyUrl) f.spotify.value = me.spotifyUrl;
+async function done(body) {
+  const btn = $("#go");
+  busy(btn, true); showMsg(msg, "");
+  try {
+    await api("/api/onboarding", { method: "POST", body, signedIn: true });
+    location.href = (await config()).dashboardUrl || "/account?welcome=1";
+  } catch (err) { busy(btn, false); showMsg(msg, err.message); }
+}
+f.addEventListener("submit", e => {
+  e.preventDefault();
+  if (!f.spotify.value.trim()) return showMsg(msg, "Paste your Spotify link first, or tap \"I'm not on Spotify yet\"."), f.spotify.focus();
+  done({ spotifyUrl: f.spotify.value.trim(), artistName: f.artistName.value.trim() });
+});
+$("#skip").addEventListener("click", e => { e.preventDefault(); done({ skip: true, artistName: f.artistName.value.trim() }); });
+</script>
+</body>
+</html>

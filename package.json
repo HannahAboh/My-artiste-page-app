@@ -5,7 +5,8 @@
   "description": "One page design, many artists: builds each artist's website from their settings file.",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "test": "node scripts/check.mjs"
+    "test": "node scripts/check.mjs && node scripts/check-billing.mjs",
+    "dev": "node scripts/dev.mjs"
   },
   "engines": { "node": ">=20" }
 }
