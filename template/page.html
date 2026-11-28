@@ -727,29 +727,29 @@ html.themed .note-fly .ring{border-color:var(--t-icon)}
 .protect p{display:flex;align-items:center;gap:8px;justify-content:center;flex-wrap:wrap}
 .protect svg{width:15px;height:15px;flex:none}
 .protect .link-btn{background:none;border:0;padding:6px 4px;font:500 10.5px/1 var(--f-sans);letter-spacing:.2em;text-transform:uppercase;color:var(--ink);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
-.trk{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:16px;background:rgba(20,15,12,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);overflow-y:auto}
-.trk[hidden]{display:none}
-.trk-card{position:relative;width:min(100%,480px);max-height:calc(100dvh - 32px);overflow-y:auto;background:var(--card);color:var(--ink);border-radius:var(--r-lg,22px);padding:28px 24px 24px;display:grid;gap:14px;box-shadow:0 30px 80px -30px rgba(0,0,0,.5)}
-.trk-x{position:absolute;right:12px;top:12px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:none;font-size:22px;line-height:1;cursor:pointer;color:var(--ink)}
-.trk-h{font:italic 400 30px/1.1 var(--f-serif)}
-.trk label{display:grid;gap:6px;font:500 10.5px/1 var(--f-sans);letter-spacing:.18em;text-transform:uppercase;color:var(--soft)}
-.trk input,.trk select,.trk textarea{font:400 15px/1.4 var(--f-sans);color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;width:100%;letter-spacing:0;text-transform:none}
-.trk .btn{justify-content:center}
-.trk-row{display:flex;gap:10px;flex-wrap:wrap}
-.trk-item{display:grid;gap:2px;padding:14px 16px;border-radius:14px;border:1px solid var(--line)}
-.trk-steps{list-style:none;margin:0;padding:0;display:grid}
-.trk-steps li{position:relative;display:grid;gap:2px;padding:0 0 18px 30px;font-size:14px;line-height:1.4}
-.trk-steps li::before{content:"";position:absolute;left:5px;top:3px;width:12px;height:12px;border-radius:50%;border:2px solid #c9bcab;background:var(--card)}
-.trk-steps li::after{content:"";position:absolute;left:11px;top:19px;bottom:2px;width:2px;background:#ddd3c5}
-.trk-steps li:last-child::after{display:none}
-.trk-steps li.done::before{background:#1d7a45;border-color:#1d7a45}
-.trk-steps li.done::after{background:#1d7a45}
-.trk-steps li.now::before{border-color:var(--ink)}
-.trk-steps b{font-weight:600}
-.trk-note{font-size:13px;line-height:1.5;padding:12px 14px;border-radius:12px;background:rgba(184,148,102,.14)}
-.trk details{border-top:1px solid var(--line);padding-top:12px}
-.trk summary{cursor:pointer;font-weight:600;font-size:14px}
-.trk details ol{margin:8px 0 0;padding-left:20px;font-size:13px;line-height:1.55;display:grid;gap:4px}
+.otrk{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:16px;background:rgba(20,15,12,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);overflow-y:auto}
+.otrk[hidden]{display:none}
+.otrk-card{position:relative;width:min(100%,480px);max-height:calc(100dvh - 32px);overflow-y:auto;background:var(--card);color:var(--ink);border-radius:var(--r-lg,22px);padding:28px 24px 24px;display:grid;gap:14px;box-shadow:0 30px 80px -30px rgba(0,0,0,.5)}
+.otrk-x{position:absolute;right:12px;top:12px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:none;font-size:22px;line-height:1;cursor:pointer;color:var(--ink)}
+.otrk-h{font:italic 400 30px/1.1 var(--f-serif)}
+.otrk label{display:grid;gap:6px;font:500 10.5px/1 var(--f-sans);letter-spacing:.18em;text-transform:uppercase;color:var(--soft)}
+.otrk input,.otrk select,.otrk textarea{font:400 15px/1.4 var(--f-sans);color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;width:100%;letter-spacing:0;text-transform:none}
+.otrk .btn{justify-content:center}
+.otrk-row{display:flex;gap:10px;flex-wrap:wrap}
+.otrk-item{display:grid;gap:2px;padding:14px 16px;border-radius:14px;border:1px solid var(--line)}
+.otrk-steps{list-style:none;margin:0;padding:0;display:grid}
+.otrk-steps li{position:relative;display:grid;gap:2px;padding:0 0 18px 30px;font-size:14px;line-height:1.4}
+.otrk-steps li::before{content:"";position:absolute;left:5px;top:3px;width:12px;height:12px;border-radius:50%;border:2px solid #c9bcab;background:var(--card)}
+.otrk-steps li::after{content:"";position:absolute;left:11px;top:19px;bottom:2px;width:2px;background:#ddd3c5}
+.otrk-steps li:last-child::after{display:none}
+.otrk-steps li.done::before{background:#1d7a45;border-color:#1d7a45}
+.otrk-steps li.done::after{background:#1d7a45}
+.otrk-steps li.now::before{border-color:var(--ink)}
+.otrk-steps b{font-weight:600}
+.otrk-note{font-size:13px;line-height:1.5;padding:12px 14px;border-radius:12px;background:rgba(184,148,102,.14)}
+.otrk details{border-top:1px solid var(--line);padding-top:12px}
+.otrk summary{cursor:pointer;font-weight:600;font-size:14px}
+.otrk details ol{margin:8px 0 0;padding-left:20px;font-size:13px;line-height:1.55;display:grid;gap:4px}
 </style>
 
 </head>
@@ -922,11 +922,11 @@ html.themed .note-fly .ring{border-color:var(--t-icon)}
 
 </main>
 
-<div class="trk" id="trk" role="dialog" aria-modal="true" aria-labelledby="trkH" hidden>
-  <div class="trk-card">
-    <button class="trk-x" type="button" id="trkClose" aria-label="Close">&times;</button>
+<div class="otrk" id="trk" role="dialog" aria-modal="true" aria-labelledby="trkH" hidden>
+  <div class="otrk-card">
+    <button class="otrk-x" type="button" id="trkClose" aria-label="Close">&times;</button>
     <span class="label">Buyer protection</span>
-    <h2 class="trk-h" id="trkH">Track your order</h2>
+    <h2 class="otrk-h" id="trkH">Track your order</h2>
     <div id="trkBody"></div>
   </div>
 </div>
@@ -1475,13 +1475,13 @@ $('#cleanBtn').addEventListener('click', () => { const c = document.body.classLi
       ["Sent", o.sent ? `${fmt(o.sent)} · ${sentHow(o)}` : `${esc(name)} is getting it ready`, !!o.sent],
       ["Delivered", o.got ? `You confirmed it arrived. Thank you!` : o.sent ? `Tap "I got it" when it arrives. If you don't, it's marked delivered on ${fmt(addDays(o.sent, autoDays))}, unless you've reported a problem.` : `Tap "I got it" when it arrives`, !!o.got]];
     const nowIx = steps.findIndex(x => !x[2]);
-    body.innerHTML = `<div class="trk-item"><b>${esc(o.item)}</b><span class="small">Order ${esc(o.id)} · sold by ${esc(name)}</span></div>
-      <ol class="trk-steps">${steps.map(([t, d, done], i) => `<li class="${done ? "done" : i === nowIx ? "now" : ""}"><b>${t}</b><span class="small">${d}</span></li>`).join("")}</ol>
-      ${state === "reported" ? `<p class="trk-note"><b>Thanks, we've got your report.</b> We'll contact ${esc(name)} and reply to you within 2 working days. If it isn't sorted within 7 days, you'll get your money back.</p>`
+    body.innerHTML = `<div class="otrk-item"><b>${esc(o.item)}</b><span class="small">Order ${esc(o.id)} · sold by ${esc(name)}</span></div>
+      <ol class="otrk-steps">${steps.map(([t, d, done], i) => `<li class="${done ? "done" : i === nowIx ? "now" : ""}"><b>${t}</b><span class="small">${d}</span></li>`).join("")}</ol>
+      ${state === "reported" ? `<p class="otrk-note"><b>Thanks, we've got your report.</b> We'll contact ${esc(name)} and reply to you within 2 working days. If it isn't sorted within 7 days, you'll get your money back.</p>`
       : state === "report" ? `<label>What's wrong?<select id="trkWhy"><option>It never arrived</option><option>It arrived damaged</option><option>I got the wrong item</option><option>Something else</option></select></label>
         <label>Tell us more<textarea id="trkMsg" rows="3" placeholder="Anything that helps us sort it out"></textarea></label>
-        <div class="trk-row"><button class="btn dark" type="button" id="trkSend">Send report</button><button class="btn line" type="button" id="trkBack">Back</button></div>`
-      : `<div class="trk-row">${o.got ? "" : `<button class="btn dark" type="button" id="trkGot">I got it</button>`}
+        <div class="otrk-row"><button class="btn dark" type="button" id="trkSend">Send report</button><button class="btn line" type="button" id="trkBack">Back</button></div>`
+      : `<div class="otrk-row">${o.got ? "" : `<button class="btn dark" type="button" id="trkGot">I got it</button>`}
           ${o.got ? "" : `<button class="btn line" type="button" id="trkReport"${canReport ? "" : " disabled"}>Report a problem</button>`}</div>
         ${o.got ? "" : `<p class="small">${canReport ? `Nothing yet? Report it and we'll step in. If it isn't sorted, you get your money back.` : `If it hasn't arrived by ${fmt(addDays(o.paid, days))}, you can report a problem here and we'll step in.`}</p>`}`}
       ${DISPUTE}`;
