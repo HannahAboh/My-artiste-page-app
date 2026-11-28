@@ -1,0 +1,28 @@
+# Cloudflare settings for the sales page, sign-up and account pages.
+# Secret keys are NOT kept here. They go in Cloudflare: Workers & Pages > my-artiste-page > Settings > Variables and Secrets.
+# See docs/setup-payments.md.
+
+name = "my-artiste-page"
+main = "worker/index.js"
+compatibility_date = "2026-11-01"
+keep_vars = true   # keep settings added in the Cloudflare dashboard when a new version goes live
+
+[assets]
+directory = "./web"
+binding = "ASSETS"
+not_found_handling = "404-page"
+
+# Once a day at 08:00 UTC (09:00 in Lagos): payment reminders, grace periods, pausing pages.
+[triggers]
+crons = ["0 8 * * *"]
+
+[observability]
+enabled = true
+
+# Safe, non-secret settings. Change them here or in the Cloudflare dashboard.
+[vars]
+BRAND_NAME = "My Artiste Page"
+PRICE_CURRENCY = "USD"   # USD needs Paystack to approve dollar payments for you. Otherwise use NGN.
+PRICE_MONTHLY = "500"    # in cents (or kobo for NGN): 500 = $5.00
+PRICE_YEARLY = "5000"    # 5000 = $50.00
+GRACE_DAYS = "7"         # days a page stays live after a failed renewal

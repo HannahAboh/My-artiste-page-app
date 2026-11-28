@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sign in · My Artiste Page</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#f2ece2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%2712%27 fill=%27%231e1814%27/%3E%3Cpath fill=%27%23f2ece2%27 d=%27M10 6v7.1A2.6 2.6 0 1 0 11.4 15.4V9l5-1.2v3.9a2.6 2.6 0 1 0 1.4 2.3V4.6Z%27/%3E%3C/svg%3E">
+
+</head>
+<body>
+<div class="shapes" aria-hidden="true"><i></i><i></i><i></i></div>
+<header class="top"><div class="wrap"><a class="brand" href="/"><b><svg viewBox="0 0 24 24"><path d="M10 6v7.1A2.6 2.6 0 1 0 11.4 15.4V9l5-1.2v3.9a2.6 2.6 0 1 0 1.4 2.3V4.6Z"/></svg></b>My Artiste Page</a><nav><a class="btn line small" href="/login">Sign in</a></nav></div></header>
+<main class="solo">
+<form class="card glass reveal" id="f" novalidate>
+  <div class="label">Welcome back</div>
+  <h1 class="title" id="t">Sign in</h1>
+  <div class="form">
+    <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" inputmode="email" required></label>
+    <label class="field" id="pwf"><span>Password</span><input name="pw" type="password" autocomplete="current-password"></label>
+    <div class="msg" id="msg" role="alert" hidden></div>
+    <button class="btn wide" id="go">Sign in</button>
+  </div>
+  <p class="alt" id="alt"><a href="#" id="toggle">Forgot your password?</a></p>
+  <p class="alt" style="margin-top:6px">New here? <a href="/#pricing">See plans</a></p>
+</form>
+</main>
+<script type="module">
+import { $, api, busy, showMsg, signIn, session, homeFor, reveals } from "/assets/app.js";
+reveals();
+const f = $("#f"), msg = $("#msg"), q = new URLSearchParams(location.search);
+let forgot = false;
+function mode(on) {
+  forgot = on;
+  $("#t").textContent = on ? "New password" : "Sign in";
+  $("#pwf").hidden = on;
+  $("#go").textContent = on ? "Email me a link" : "Sign in";
+  $("#toggle").textContent = on ? "Back to sign in" : "Forgot your password?";
+  showMsg(msg, "");
+}
+$("#toggle").addEventListener("click", e => { e.preventDefault(); mode(!forgot); });
+if (q.get("forgot")) mode(true);
+session().then(async s => { if (s && !forgot) { try { location.href = await homeFor(await api("/api/me", { signedIn: true })); } catch {} } });
+f.addEventListener("submit", async e => {
+  e.preventDefault();
+  const btn = $("#go"), email = f.email.value.trim();
+  showMsg(msg, "");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showMsg(msg, "Please check your email address."), f.email.focus();
+  busy(btn, true);
+  try {
+    if (forgot) {
+      await api("/api/forgot", { method: "POST", body: { email } });
+      busy(btn, false);
+      return showMsg(msg, "If that email has a plan, a link is on its way. Check your inbox (and spam).", true);
+    }
+    await signIn(email, f.pw.value);
+    const me = await api("/api/me", { signedIn: true });
+    const next = q.get("next");
+    location.href = next && next.startsWith("/") && !next.startsWith("//") ? next : await homeFor(me);
+  } catch (err) { busy(btn, false); showMsg(msg, err.message); }
+});
+</script>
+</body>
+</html>
