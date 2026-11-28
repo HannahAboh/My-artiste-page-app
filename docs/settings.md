@@ -61,6 +61,7 @@ Each artist has one `settings.json` in `artists/<slug>/`. This page explains eve
 | `bandsintown` | Set `artist` and `appId` to load tour dates from Bandsintown instead. |
 | `store`, `merch` | Store link, and products with `name`, `price`, `href` and `icon` (`vinyl`, `tee` or `poster`). |
 | `support` | Tips: `currency` (`USD` or `NGN`), `amounts`, the `naira` payment link (Paystack) and `international` link (PayPal), and optional `bank` details. |
+| `merchProtection` | Buyer protection for merch: `on`, `supportEmail` (where problem reports go, along with the artist's booking email), `reportAfterDays` (how long a fan waits before they can report a missing order, default 14). Shows "Sold and shipped by…" and a **Track an order** button under the store; the panel also opens from `#track` or `?order=`. `autoDeliveredDays` (default 21): if the fan never taps "I got it", the order counts as delivered this many days after it was sent, unless they reported a problem. Each order has a `method`: `courier` (optional `courier` name and `tracking` number), `rider` (`riderName`, `riderPhone`) or `pickup`. `sample: true` with `sampleOrder` shows a pretend order for any order number. |
 
 ## Fans and contact
 

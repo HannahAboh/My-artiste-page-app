@@ -721,6 +721,35 @@ html.themed .note-fly .ring{border-color:var(--t-icon)}
 .product .box{border-radius:var(--r-md);overflow:hidden}
 #contact .contacts,.contacts{border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
 #consent{border-radius:calc(var(--r-sm)*.4)}
+
+/* merch buyer protection: line under the store, and the order tracking panel */
+.protect{display:grid;justify-items:center;gap:8px;margin-top:22px;text-align:center}
+.protect p{display:flex;align-items:center;gap:8px;justify-content:center;flex-wrap:wrap}
+.protect svg{width:15px;height:15px;flex:none}
+.protect .link-btn{background:none;border:0;padding:6px 4px;font:500 10.5px/1 var(--f-sans);letter-spacing:.2em;text-transform:uppercase;color:var(--ink);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.trk{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:16px;background:rgba(20,15,12,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);overflow-y:auto}
+.trk[hidden]{display:none}
+.trk-card{position:relative;width:min(100%,480px);max-height:calc(100dvh - 32px);overflow-y:auto;background:var(--card);color:var(--ink);border-radius:var(--r-lg,22px);padding:28px 24px 24px;display:grid;gap:14px;box-shadow:0 30px 80px -30px rgba(0,0,0,.5)}
+.trk-x{position:absolute;right:12px;top:12px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:none;font-size:22px;line-height:1;cursor:pointer;color:var(--ink)}
+.trk-h{font:italic 400 30px/1.1 var(--f-serif)}
+.trk label{display:grid;gap:6px;font:500 10.5px/1 var(--f-sans);letter-spacing:.18em;text-transform:uppercase;color:var(--soft)}
+.trk input,.trk select,.trk textarea{font:400 15px/1.4 var(--f-sans);color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;width:100%;letter-spacing:0;text-transform:none}
+.trk .btn{justify-content:center}
+.trk-row{display:flex;gap:10px;flex-wrap:wrap}
+.trk-item{display:grid;gap:2px;padding:14px 16px;border-radius:14px;border:1px solid var(--line)}
+.trk-steps{list-style:none;margin:0;padding:0;display:grid}
+.trk-steps li{position:relative;display:grid;gap:2px;padding:0 0 18px 30px;font-size:14px;line-height:1.4}
+.trk-steps li::before{content:"";position:absolute;left:5px;top:3px;width:12px;height:12px;border-radius:50%;border:2px solid #c9bcab;background:var(--card)}
+.trk-steps li::after{content:"";position:absolute;left:11px;top:19px;bottom:2px;width:2px;background:#ddd3c5}
+.trk-steps li:last-child::after{display:none}
+.trk-steps li.done::before{background:#1d7a45;border-color:#1d7a45}
+.trk-steps li.done::after{background:#1d7a45}
+.trk-steps li.now::before{border-color:var(--ink)}
+.trk-steps b{font-weight:600}
+.trk-note{font-size:13px;line-height:1.5;padding:12px 14px;border-radius:12px;background:rgba(184,148,102,.14)}
+.trk details{border-top:1px solid var(--line);padding-top:12px}
+.trk summary{cursor:pointer;font-weight:600;font-size:14px}
+.trk details ol{margin:8px 0 0;padding-left:20px;font-size:13px;line-height:1.55;display:grid;gap:4px}
 </style>
 
 </head>
@@ -876,6 +905,7 @@ html.themed .note-fly .ring{border-color:var(--t-icon)}
     <div class="sec-head"><h2 class="title">Store</h2></div>
     <div class="merch" id="merch"></div>
     <div class="center"><a class="btn line" data-href="store">Shop all</a></div>
+    <div class="protect" id="protect"></div>
   </div>
 </section>
 
@@ -891,6 +921,15 @@ html.themed .note-fly .ring{border-color:var(--t-icon)}
 </section>
 
 </main>
+
+<div class="trk" id="trk" role="dialog" aria-modal="true" aria-labelledby="trkH" hidden>
+  <div class="trk-card">
+    <button class="trk-x" type="button" id="trkClose" aria-label="Close">&times;</button>
+    <span class="label">Buyer protection</span>
+    <h2 class="trk-h" id="trkH">Track your order</h2>
+    <div id="trkBody"></div>
+  </div>
+</div>
 
 <div class="lib" id="lib" aria-label="Links"><div class="lib-in" id="libIn"></div></div>
 
@@ -1403,6 +1442,72 @@ $('#cleanBtn').addEventListener('click', () => { const c = document.body.classLi
   else $('#supBank').remove();
 })();
 
+
+// Merch buyer protection: a line under the store, and an order tracking panel (Track an order, #track or ?order=)
+// Fans see each step (paid, sent with a tracking number, delivered), tap "I got it", or report a problem after
+// SITE.merchProtection.reportAfterDays. Reports go to the support email and the artist. The real version looks orders up
+// on the server; with "sample": true any order number shows a sample order.
+(() => {
+  const P = SITE.merchProtection; if (!P || P.on === false || !document.getElementById("store")) return;
+  const name = SITE.name || "the artist", days = P.reportAfterDays || 14, SHIELD = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v6c0 4.4 3 7.6 7 9 4-1.4 7-4.6 7-9V6z"/><path d="m9 12 2 2 4-4"/></svg>';
+  document.getElementById("protect").innerHTML = `<p class="small">${SHIELD}<span>Sold and shipped by ${esc(name)}. Every order is covered by buyer protection.</span></p><button type="button" class="link-btn" id="trkOpen">Track an order</button>`;
+  const box = document.getElementById("trk"), body = document.getElementById("trkBody");
+  const fmt = d => new Date(d + "T12:00:00").toLocaleDateString("en-GB", { day:"numeric", month:"long" });
+  const addDays = (d, n) => { const t = new Date(d + "T12:00:00"); t.setDate(t.getDate() + n); return t.toISOString().slice(0, 10); };
+  const today = new Date().toISOString().slice(0, 10);
+  let order = null, state = "find"; const autoDays = P.autoDeliveredDays || 21;
+  const DISPUTE = `<details><summary>Paid with PayPal or a card from abroad?</summary><ol>
+    <li><b>PayPal:</b> open PayPal, go to the Resolution Centre, tap <i>Report a problem</i> and choose <i>Item not received</i>. You have 180 days.</li>
+    <li><b>Card:</b> contact your bank or card company and ask to dispute the payment for an item that never arrived.</li>
+    <li>Tell us too, using <i>Report a problem</i> above, so we can follow up with ${esc(name)}.</li></ol></details>`;
+  const draw = () => {
+    if (state === "find"){ body.innerHTML = `<p class="small">Enter the order number from your confirmation email.</p>
+      <label>Order number<input id="trkNo" autocomplete="off" placeholder="For example MAP-1042"></label>
+      <label>Email you ordered with<input id="trkEmail" type="email" autocomplete="email" placeholder="you@example.com"></label>
+      <p class="small" id="trkErr" hidden>Enter both your order number and email.</p>
+      <button class="btn dark" type="button" id="trkFind">Find my order</button>${DISPUTE}`; return; }
+    const o = order, canReport = !o.got && addDays(o.paid, days) <= today;
+    // the artist picks how it was sent: courier (tracking number optional), dispatch rider (name + phone), or hand delivery / pickup
+    const sentHow = o => o.method === "rider" ? `Sent with a dispatch rider${o.riderName ? `, <b>${esc(o.riderName)}</b>` : ""}${o.riderPhone ? ` · <a href="tel:${esc(o.riderPhone.replace(/[^+\d]/g, ""))}">${esc(o.riderPhone)}</a>` : ""}`
+      : o.method === "pickup" ? `Handed over in person or ready for pickup${o.pickupNote ? ` · ${esc(o.pickupNote)}` : ""}`
+      : `Sent by courier${o.courier ? ` (${esc(o.courier)})` : ""}${o.tracking ? `, tracking number <b>${esc(o.tracking)}</b>` : ""}`;
+    const steps = [["Paid", `${fmt(o.paid)} · ${esc(o.amount)}`, true],
+      ["Sent", o.sent ? `${fmt(o.sent)} · ${sentHow(o)}` : `${esc(name)} is getting it ready`, !!o.sent],
+      ["Delivered", o.got ? `You confirmed it arrived. Thank you!` : o.sent ? `Tap "I got it" when it arrives. If you don't, it's marked delivered on ${fmt(addDays(o.sent, autoDays))}, unless you've reported a problem.` : `Tap "I got it" when it arrives`, !!o.got]];
+    const nowIx = steps.findIndex(x => !x[2]);
+    body.innerHTML = `<div class="trk-item"><b>${esc(o.item)}</b><span class="small">Order ${esc(o.id)} · sold by ${esc(name)}</span></div>
+      <ol class="trk-steps">${steps.map(([t, d, done], i) => `<li class="${done ? "done" : i === nowIx ? "now" : ""}"><b>${t}</b><span class="small">${d}</span></li>`).join("")}</ol>
+      ${state === "reported" ? `<p class="trk-note"><b>Thanks, we've got your report.</b> We'll contact ${esc(name)} and reply to you within 2 working days. If it isn't sorted within 7 days, you'll get your money back.</p>`
+      : state === "report" ? `<label>What's wrong?<select id="trkWhy"><option>It never arrived</option><option>It arrived damaged</option><option>I got the wrong item</option><option>Something else</option></select></label>
+        <label>Tell us more<textarea id="trkMsg" rows="3" placeholder="Anything that helps us sort it out"></textarea></label>
+        <div class="trk-row"><button class="btn dark" type="button" id="trkSend">Send report</button><button class="btn line" type="button" id="trkBack">Back</button></div>`
+      : `<div class="trk-row">${o.got ? "" : `<button class="btn dark" type="button" id="trkGot">I got it</button>`}
+          ${o.got ? "" : `<button class="btn line" type="button" id="trkReport"${canReport ? "" : " disabled"}>Report a problem</button>`}</div>
+        ${o.got ? "" : `<p class="small">${canReport ? `Nothing yet? Report it and we'll step in. If it isn't sorted, you get your money back.` : `If it hasn't arrived by ${fmt(addDays(o.paid, days))}, you can report a problem here and we'll step in.`}</p>`}`}
+      ${DISPUTE}`;
+  };
+  const open = () => { state = "find"; order = null; draw(); box.hidden = false; document.body.style.overflow = "hidden"; setTimeout(() => body.querySelector("input")?.focus(), 30); };
+  const close = () => { box.hidden = true; document.body.style.overflow = ""; if (location.hash === "#track") history.replaceState(null, "", location.pathname + location.search); };
+  document.getElementById("trkOpen").addEventListener("click", open);
+  document.getElementById("trkClose").addEventListener("click", close);
+  box.addEventListener("click", e => { if (e.target === box) close(); });
+  addEventListener("keydown", e => { if (e.key === "Escape" && !box.hidden) close(); });
+  body.addEventListener("click", e => {
+    const id = e.target.id;
+    if (id === "trkFind"){ const no = body.querySelector("#trkNo").value.trim(), em = body.querySelector("#trkEmail").value.trim();
+      if (!no || !em){ body.querySelector("#trkErr").hidden = false; return; }
+      if (!P.sample){ body.querySelector("#trkErr").hidden = false; body.querySelector("#trkErr").textContent = "We couldn't find that order. Check the number in your email."; return; }
+      order = { ...(P.sampleOrder || {}), id: no.toUpperCase(), email: em }; state = "order"; draw(); }
+    if (id === "trkGot"){ order.got = true; state = "order"; draw(); }
+    if (id === "trkReport"){ state = "report"; draw(); }
+    if (id === "trkBack"){ state = "order"; draw(); }
+    if (id === "trkSend"){ const why = body.querySelector("#trkWhy").value, msg = body.querySelector("#trkMsg").value.trim();
+      const to = [P.supportEmail, SITE.contact?.email].filter(x => x && /@/.test(x) && !/example\.com$/.test(x)).join(",");
+      if (to) location.href = `mailto:${to}?subject=${encodeURIComponent(`Order problem: ${order.id} (${name})`)}&body=${encodeURIComponent(`${why}\n\n${msg}\n\n---\nOrder: ${order.id}\nItem: ${order.item}\nPaid: ${order.paid}\nBuyer email: ${order.email}`)}`;
+      state = "reported"; draw(); }
+  });
+  if (location.hash === "#track" || new URLSearchParams(location.search).get("order")) open();
+})();
 
 // WhatsApp / Telegram beside the mailing list
 (() => {
