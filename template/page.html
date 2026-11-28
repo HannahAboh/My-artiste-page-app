@@ -36,6 +36,8 @@ h1,h2,h3{text-wrap:balance}
 .item-t{font:italic 400 22px/1.2 var(--f-serif)}
 .sec{padding-block:var(--gap-sec) 0}
 .sec-head{display:grid;justify-items:center;gap:14px;margin-bottom:56px;text-align:center}
+/* phones: less empty space between sections (about 80px, the usual range is 64 to 96px on a phone) */
+@media (max-width:640px){:root{--gap-sec:80px}.sec-head{margin-bottom:40px}}
 .center{display:flex;justify-content:center;margin-top:44px}
 
 /* Buttons */
