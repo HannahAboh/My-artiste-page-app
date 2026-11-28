@@ -1764,7 +1764,12 @@ if (typeof SITE.corners === 'number') document.documentElement.style.setProperty
     const center = c => c.offsetLeft + c.offsetWidth / 2 - rail.clientWidth / 2;
     const go = c => c && rail.scrollTo({ left: center(c), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
     let cur = -1, n = -1;
+    // side space so the first and last cards can sit in the middle of the screen
+    const pad = () => { const cs = cards(); if (!cs.length) return; const w = rail.clientWidth;
+      list.style.paddingLeft = Math.max(16, (w - cs[0].offsetWidth) / 2) + 'px';
+      list.style.paddingRight = Math.max(16, (w - cs[cs.length - 1].offsetWidth) / 2) + 'px'; };
     const update = () => {
+      pad();
       const cs = cards(); const mid = rail.scrollLeft + rail.clientWidth / 2;
       let i = 0, best = Infinity; cs.forEach((c, k) => { const d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (d < best){ best = d; i = k; } });
       const scrollable = rail.scrollWidth > rail.clientWidth + 4;
@@ -1781,7 +1786,7 @@ if (typeof SITE.corners === 'number') document.documentElement.style.setProperty
     new ResizeObserver(() => requestAnimationFrame(update)).observe(list);
     new MutationObserver(() => requestAnimationFrame(update)).observe(list, { childList: true, subtree: false, attributes: true, attributeFilter: ['hidden'] });
     addEventListener('resize', () => requestAnimationFrame(update)); addEventListener('load', update);
-    update();
+    update(); rail.scrollLeft = cards()[0] ? center(cards()[0]) : 0;
   };
   build(document.getElementById('music'), document.getElementById('songs'), document.getElementById('songs'), 'Videos');
   build(document.getElementById('discography'), document.getElementById('discList'), document.querySelector('#discList .disc'), 'Songs');
