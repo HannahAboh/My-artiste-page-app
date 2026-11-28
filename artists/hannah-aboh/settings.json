@@ -218,11 +218,11 @@
   ],
   "release": {
     "sample": true,
+    "type": "Single",
     "title": "Next Single",
     "date": "2026-12-18T00:00:00+01:00",
     "cover": "",
     "presave": "#",
-    "presaveApple": "#",
     "listen": ""
   },
   "bandsintown": {

@@ -538,7 +538,7 @@ html.no-doodles body::before,html.linkmode body::before{display:none}
 .sample{display:inline-flex;align-items:center;gap:6px;font:600 9px/1 var(--f-sans);letter-spacing:.18em;text-transform:uppercase;color:#7a4d00;background:#fff1cc;border:1px dashed #d9a400;border-radius:99px;padding:5px 9px;white-space:nowrap}
 .sample::before{content:"";width:6px;height:6px;border-radius:50%;background:#d9a400}
 
-/* ---------- New single: countdown + pre-save ---------- */
+/* ---------- New release: countdown + pre-save ---------- */
 .nr{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:56px;align-items:center;max-width:920px;margin:0 auto}
 .nr .cover{max-width:420px;width:100%;justify-self:end;background-size:cover;background-position:50% 30%;border-radius:var(--r-lg);overflow:hidden}
 .nr .cover::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,12,10,0) 45%,rgba(14,12,10,.7) 100%);z-index:1}
@@ -737,7 +737,7 @@ html.themed .note-fly .ring{border-color:var(--t-icon)}
   <div class="sn-head"><span class="sn-name" data-t="name"></span><button class="sn-close" id="snClose" type="button" aria-label="Close menu">&times;</button></div>
   <nav class="sn-links">
     <a href="#bio"><span>Bio</span></a>
-    <a href="#release"><span>New single</span><small>Pre-save</small></a>
+    <a href="#release"><span id="nrMenu">New release</span><small id="nrMenuSmall">Pre-save</small></a>
     <a href="#music"><span>Videos</span><small>YouTube</small></a>
     <a href="#song-1" class="sub"><span>Latest video</span></a>
     <a href="#discography"><span>Listen</span><small>Spotify</small></a>
@@ -788,7 +788,7 @@ html.themed .note-fly .ring{border-color:var(--t-icon)}
       <div class="cover img" id="nrCover"><div class="ct"><small id="nrKicker">New single</small><b id="nrCoverTitle"></b></div></div>
       <div class="nr-text">
         <span class="label" id="nrWhen"></span>
-        <h2 class="title">New single</h2>
+        <h2 class="title" id="nrHead">New release</h2>
         <p class="nr-song" id="nrSong"></p>
         <div class="cd" id="nrCount" aria-label="Time until release"><div><b data-u="d">00</b><small>Days</small></div><div><b data-u="h">00</b><small>Hours</small></div><div><b data-u="m">00</b><small>Mins</small></div><div><b data-u="s">00</b><small>Secs</small></div></div>
         <div class="btns" id="nrBtns"></div>
@@ -1343,10 +1343,16 @@ $('#cleanBtn').addEventListener('click', () => { const c = document.body.classLi
   .forEach(([q, on]) => { const el = document.querySelector(q); if (el) el.outerHTML = sampleTag(on); });
 [["#shows", SITE.showsSample], ["#store", SITE.merchSample]].forEach(([q, on]) => { const h = document.querySelector(q + " .sec-head"); if (h && on) h.insertAdjacentHTML("beforeend", sampleTag(true)); });
 
-// New single: countdown, then "Out now"
+// New release (single, EP, album, mixtape or podcast episode): countdown, then "Out now"
 (() => {
   const R = SITE.release, sec = document.getElementById("release"); if (!R || !sec) return;
   const when = new Date(R.date), first = SITE.name.split(" ")[0];
+  // release.type sets the heading and the button: "New EP", "Pre-save the EP"
+  const TYPES = { "single":["single", "Pre-save the single"], "ep":["EP", "Pre-save the EP"], "album":["album", "Pre-save the album"],
+    "mixtape":["mixtape", "Pre-save the mixtape"], "podcast episode":["episode", "Follow the podcast"], "other":["release", "Pre-save"] };
+  const [noun, cta] = TYPES[String(R.type || "single").toLowerCase()] || TYPES.single, podcast = noun === "episode";
+  $('#nrHead').textContent = `New ${noun}`;
+  const mi = document.getElementById("nrMenu"); if (mi){ mi.textContent = `New ${noun}`; document.getElementById("nrMenuSmall").textContent = podcast ? "Follow" : "Pre-save"; }
   paint($('#nrCover'), R.cover || BIO_IMG.photo, 0);
   $('#nrCoverTitle').textContent = R.title; $('#nrKicker').textContent = SITE.name; $('#nrSong').textContent = `“${R.title}”`;
   const fmt = when.toLocaleDateString("en-GB", { weekday:"long", day:"numeric", month:"long", timeZone:"Africa/Lagos" });
@@ -1363,7 +1369,7 @@ $('#cleanBtn').addEventListener('click', () => { const c = document.body.classLi
     cells.forEach(c => { const u = units[c.dataset.u]; const v = Math.floor(left / u); left -= v * u; c.textContent = String(v).padStart(2, "0"); });
   }
   $('#nrWhen').textContent = `Out ${fmt}`;
-  $('#nrBtns').innerHTML = btn("dark", R.presave, "Pre-save on Spotify") + btn("line", R.presaveApple, "Pre-add on Apple Music") + `<a class="btn line" href="#join">Remind me</a>`;
+  $('#nrBtns').innerHTML = btn("dark", R.presave, cta) + `<a class="btn line" href="#join">Remind me</a>`;
   tick(); timer = setInterval(tick, 1000);
 })();
 

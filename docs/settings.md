@@ -56,7 +56,7 @@ Each artist has one `settings.json` in `artists/<slug>/`. This page explains eve
 
 | Setting | What it does |
 | --- | --- |
-| `release` | Countdown and pre-save: `title`, `date` as `2026-12-18T00:00:00+01:00` (+01:00 is Lagos time), `cover` (empty uses the bio photo), `presave`, `presaveApple`, `listen`. `"sample": true` marks placeholder content. |
+| `release` | Countdown and pre-save for the next release: `type` (`Single`, `EP`, `Album`, `Mixtape`, `Podcast episode` or `Other`; sets the heading, e.g. "New EP", and the button, e.g. "Pre-save the EP"), `title`, `date` as `2026-12-18T00:00:00+01:00` (+01:00 is Lagos time), `cover` (empty uses the bio photo), `presave` (any one link: Spotify, Apple Music or the distributor's pre-save link), `listen`. `"sample": true` marks placeholder content. |
 | `shows` | Tour dates as `[day, month, weekday, city, venue, status, ticket link]`. Status is empty, `Few left` or `Sold out`. |
 | `bandsintown` | Set `artist` and `appId` to load tour dates from Bandsintown instead. |
 | `store`, `merch` | Store link, and products with `name`, `price`, `href` and `icon` (`vinyl`, `tee` or `poster`). |
